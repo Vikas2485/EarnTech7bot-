@@ -22,7 +22,7 @@ def start(message):
         users[user_id] = {"balance": 10, "referrals": 0, "upi": ""}
         save_users()
         bot.send_message(message.chat.id, "🎉 Welcome to EarnTech7Bot!")
-You received ₹10 as a welcome bonus using code ECASH10!")
+bot.send_message(message.chat.id, "You received Rs.10 as a welcome bonus using code ECASH10!")
     else:
         bot.send_message(message.chat.id, "👋 Welcome back to EarnTech7Bot!")
 
@@ -37,7 +37,7 @@ def profile(message):
     balance = user.get("balance", 0)
     refs = user.get("referrals", 0)
     bot.send_message(message.chat.id, f"👤 Profile Info:
-💰 Balance: ₹{balance}
+💰 Balance: Rs.{balance}
 👥 Referrals: {refs}")
 
 @bot.message_handler(func=lambda m: m.text == "💸 Withdraw")
@@ -51,7 +51,7 @@ def collect_upi(message):
     users[user_id]["upi"] = upi
     save_users()
     bot.send_message(message.chat.id, f"✅ UPI set: {upi}
-💰 Now enter the amount to withdraw (Minimum ₹50):")
+💰 Now enter the amount to withdraw (Minimum Rs.50):")
     bot.register_next_step_handler(message, process_withdraw)
 
 def process_withdraw(message):
@@ -60,7 +60,7 @@ def process_withdraw(message):
         user_id = str(message.chat.id)
         balance = users[user_id]["balance"]
         if amount < 50:
-            bot.send_message(message.chat.id, "❌ Minimum withdraw is ₹50.")
+            bot.send_message(message.chat.id, "❌ Minimum withdraw is Rs.50.")
         elif amount > balance:
             bot.send_message(message.chat.id, "❌ Insufficient balance.")
         else:
