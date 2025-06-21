@@ -21,7 +21,7 @@ def start(message):
     if user_id not in users:
         users[user_id] = {"balance": 10, "referrals": 0, "upi": ""}
         save_users()
-        bot.send_message(message.chat.id, "🎉 Welcome to EarnTech7Bot!
+        bot.send_message(message.chat.id, "🎉 Welcome to EarnTech7Bot!")
 You received ₹10 as a welcome bonus using code ECASH10!")
     else:
         bot.send_message(message.chat.id, "👋 Welcome back to EarnTech7Bot!")
