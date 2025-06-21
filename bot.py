@@ -21,8 +21,11 @@ def start(message):
     if user_id not in users:
         users[user_id] = {"balance": 10, "referrals": 0, "upi": ""}
         save_users()
-        bot.send_message(message.chat.id, "🎉 Welcome to EarnTech7Bot!")
-bot.send_message(message.chat.id, "You received Rs.10 as a welcome bonus using code ECASH10!")
+        bot.send_message(
+            message.chat.id,
+            """🎉 Welcome to EarnTech7Bot!
+You received ₹10 as a welcome bonus using code ECASH10!"""
+        )
     else:
         bot.send_message(message.chat.id, "👋 Welcome back to EarnTech7Bot!")
 
@@ -36,9 +39,12 @@ def profile(message):
     user = users.get(str(message.chat.id), {})
     balance = user.get("balance", 0)
     refs = user.get("referrals", 0)
-    bot.send_message(message.chat.id, f"👤 Profile Info:
-💰 Balance: Rs.{balance}
-👥 Referrals: {refs}")
+    bot.send_message(
+        message.chat.id,
+        f"""👤 Profile Info:
+💰 Balance: ₹{balance}
+👥 Referrals: {refs}"""
+    )
 
 @bot.message_handler(func=lambda m: m.text == "💸 Withdraw")
 def withdraw(message):
@@ -50,8 +56,11 @@ def collect_upi(message):
     user_id = str(message.chat.id)
     users[user_id]["upi"] = upi
     save_users()
-    bot.send_message(message.chat.id, f"✅ UPI set: {upi}
-💰 Now enter the amount to withdraw (Minimum Rs.50):")
+    bot.send_message(
+        message.chat.id,
+        f"""✅ UPI set: {upi}
+💰 Now enter the amount to withdraw (Minimum ₹50):"""
+    )
     bot.register_next_step_handler(message, process_withdraw)
 
 def process_withdraw(message):
@@ -60,18 +69,21 @@ def process_withdraw(message):
         user_id = str(message.chat.id)
         balance = users[user_id]["balance"]
         if amount < 50:
-            bot.send_message(message.chat.id, "❌ Minimum withdraw is Rs.50.")
+            bot.send_message(message.chat.id, "❌ Minimum withdraw is ₹50.")
         elif amount > balance:
             bot.send_message(message.chat.id, "❌ Insufficient balance.")
         else:
             users[user_id]["balance"] -= amount
             save_users()
-            bot.send_message(message.chat.id, "📤 Withdrawal Request Received!
+            bot.send_message(
+                message.chat.id,
+                """📤 Withdrawal Request Received!
 
 Your request has been submitted.
 💳 As soon as funds are available, your payment will be processed.
 
-🔒 Please be patient – payments will be sent as soon as possible.")
+🔒 Please be patient – payments will be sent as soon as possible."""
+            )
     except:
         bot.send_message(message.chat.id, "❌ Invalid amount.")
 
